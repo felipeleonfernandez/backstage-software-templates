@@ -5,7 +5,7 @@ on:
     paths:
       - src/**
     branches:
-      - master
+      - main
 
 jobs:
   ci:
@@ -90,3 +90,4 @@ jobs:
         run: |
           argocd app sync ${{values.app_name}}
           argocd app wait ${{values.app_name}} --timeout 180
+
