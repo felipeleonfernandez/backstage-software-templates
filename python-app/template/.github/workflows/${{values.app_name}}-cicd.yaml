@@ -33,7 +33,7 @@ jobs:
 
   cd:
     needs: ci
-    runs-on: backstage-course-org-self-hosted
+    runs-on: self-hosted
     steps:
 
       - uses: actions/checkout@v3
