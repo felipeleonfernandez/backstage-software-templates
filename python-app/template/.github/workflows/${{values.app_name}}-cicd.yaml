@@ -42,8 +42,10 @@ jobs:
         shell: bash
         run: |
           echo ${{ '${{needs.ci.outputs.commit_id}}' }}
-          pip install yq
-          yq -Yi '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/${{values.app_name}}/values-${{values.app_env}}.yaml
+          sudo apt update && sudo apt install wget -y
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod a+x /usr/local/bin/yq
+          yq e '.image.tag = "${{needs.ci.outputs.commit_id}}"' -i charts/python-app-1/values-dev.yaml 
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -81,7 +83,7 @@ jobs:
             --dest-namespace ${{values.app_env}} \
             --dest-server https://kubernetes.default.svc \
             --values values-${{values.app_env}}.yaml \
-            --revision master \
+            --revision main \
             --sync-policy manual \
             --sync-option CreateNamespace=true
 
