@@ -45,7 +45,7 @@ jobs:
           sudo apt update && sudo apt install wget -y
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod a+x /usr/local/bin/yq
-          yq e '.image.tag = "${{needs.ci.outputs.commit_id}}"' -i charts/python-app-1/values-dev.yaml 
+          yq e '.image.tag = "${{needs.ci.outputs.commit_id}}"' -i charts/${{values.app_name}}/values-dev.yaml 
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
